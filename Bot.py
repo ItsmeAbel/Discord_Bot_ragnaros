@@ -1,4 +1,4 @@
-# bot.py
+# Client.py
 #This is a client class that represents the connection to discord
 import os
 
@@ -6,6 +6,7 @@ import discord
 from dotenv import load_dotenv
 
 load_dotenv()
+
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
