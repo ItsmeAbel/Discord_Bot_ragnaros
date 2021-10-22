@@ -3,6 +3,8 @@
 import os
 
 import discord
+from discord import message
+from discord import guild
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,17 +20,38 @@ async def on_ready():   #Event handler that is executed when the client has esta
         if guild.name == SERVER:        #--with the one we wanted
             break
     
-    
+    members = '\n - '.join([member.name for member in guild.members])
 
     print(
         
         f'{client.user} is connected to the following server:\n'
         f'{guild.name} id: {guild.id}\n'
+
         
         )
 
     members = '\n - '.join([member.name for member in guild.members])
     print(f'Guild members: \n {members}')
 
+with open('wordlist.txt', 'r') as f:
+    global badwords # You want to be able to access this throughout the code
+    words = f.read()
+    badwords = words.split('\n')
+
+
+@client.event
+async def on_message(message):
+
+    if(message.author == client.user):
+        return
+
+    msg = message.content
+    for word in badwords:
+        if word in msg:
+            #await message.delete()
+            await message.channel.send("Language! ⍟")
+
+        
+    #await message.channel.send(message.content)
 
 client.run(TOKEN)
