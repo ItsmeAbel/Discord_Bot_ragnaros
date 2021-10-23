@@ -47,10 +47,10 @@ async def on_message(message):
 
     
     if(message.author.id == 203201228035981312):
-        if(message.author == 'Hey Rag' or 'Hey Ragnaros'): 
+        if(message.content == 'Hey Rag' or 'Hey Ragnaros'): 
             await message.channel.send('Hello {} My Liege. I am at your service!'.format(message.author.name))
         
-    if(message.author == 'toss a coin'):
+    if(message.content == 'toss a coin'):
         await message.channel.send("Heads!") or await message.channel.send("Tails")
             
 
