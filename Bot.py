@@ -45,6 +45,10 @@ async def on_message(message):
     if(message.author == client.user):
         return
 
+    
+    if(message.author == 'Hey Rag' or 'Hey Ragnaros'):
+        await message.channel.send('Hello {} my liege'.format(message.author.name))
+
     msg = message.content
     for word in badwords:
         if word in msg:
