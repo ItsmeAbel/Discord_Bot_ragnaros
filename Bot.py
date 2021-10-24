@@ -51,8 +51,14 @@ async def on_message(message):
             await message.channel.send('Hello {} My Liege. I am at your service!'.format(message.author.name))
         
     if(message.content == 'toss a coin'):
-        await message.channel.send("Heads!") or await message.channel.send("Tails")
-            
+        from random import randrange
+        HOT = randrange(2)
+        if HOT == 1:
+            await message.channel.send("Heads!")
+        elif HOT == 2:
+            await message.channel.send("Tails")
+        else:
+            await message.channel.send("Error!")
 
        
 
