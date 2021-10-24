@@ -49,7 +49,7 @@ async def on_message(message):
     if(message.author.id == 203201228035981312 and message.content == 'Yo'):
             await message.channel.send('Hello {} My Liege. I am at your service!'.format(message.author.name))
             
-        
+    await client.process_commands(message) 
     if(message.content == 'toss a coin'):
         from random import randrange
         HOT = randrange(2)
@@ -67,7 +67,6 @@ async def on_message(message):
         if word in msg:
             #await message.delete()
             await message.channel.send("Language! ⍟")
-            await message.channel.send(message.author.id)
 
     await client.process_commands(message)
     #await message.channel.send(message.content)
