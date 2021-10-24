@@ -68,7 +68,7 @@ async def on_message(message):
             await message.channel.send("Language! ⍟")
             await message.channel.send(message.author.id)
 
-        
+    await client.process_commands(message)
     #await message.channel.send(message.content)
 
 client.run(TOKEN)
