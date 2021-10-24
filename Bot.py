@@ -42,20 +42,19 @@ with open('wordlist.txt', 'r') as f:
 @client.event
 async def on_message(message):
 
-    if(message.author == client.user):
+    if(message.author == client.user):  #if message is coming from the bot itself
         return
 
     
-    if(message.author.id == 203201228035981312):
-        if(message.content == 'Hey Rag' or 'Hey Ragnaros'): 
+    if(message.author.id == 203201228035981312 and message.content.startswith == 'Yo'):
             await message.channel.send('Hello {} My Liege. I am at your service!'.format(message.author.name))
         
     if(message.content == 'toss a coin'):
         from random import randrange
         HOT = randrange(2)
-        if HOT == 1:
+        if HOT == 0:
             await message.channel.send("Heads!")
-        elif HOT == 2:
+        elif HOT == 1:
             await message.channel.send("Tails")
         else:
             await message.channel.send("Error!")
