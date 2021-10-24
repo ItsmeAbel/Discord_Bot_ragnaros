@@ -55,7 +55,7 @@ async def on_message(message):
         if HOT == 0:
             await message.channel.send("Heads!")
         elif HOT == 1:
-            await message.channel.send("Tails")
+            await message.channel.send("Tails!")
         else:
             await message.channel.send("Error!")
 
@@ -66,6 +66,7 @@ async def on_message(message):
         if word in msg:
             #await message.delete()
             await message.channel.send("Language! ⍟")
+            await message.channel.send(message.author.id)
 
         
     #await message.channel.send(message.content)
