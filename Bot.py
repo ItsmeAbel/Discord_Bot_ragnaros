@@ -3,7 +3,8 @@
 import os
 
 import discord
-from discord import commands,tasks,message, guild
+from discord import message, guild
+from discord.ext import commands
 from dotenv import load_dotenv
 import asyncio  #used for concurency programming. Similar to multi threading
 #for music
