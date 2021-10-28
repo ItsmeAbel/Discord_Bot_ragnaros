@@ -1,2 +1,4 @@
 discord.py==1.7.3
 python-dotenv==0.19.1
+youtube-dl==2021.6.6
+#pip list to see a list of versions of installed packages
