@@ -4,7 +4,7 @@ import os
 from tokenize import Token
 
 import discord
-#from discord import message, guild
+from discord import message, guild
 from discord.ext import commands #very important that it's .ext and not discord alone
 from dotenv import load_dotenv
 import asyncio  #used for concurency programming. Similar to multi threading
@@ -21,8 +21,8 @@ SERVER = os.getenv('DISCORD_SERVER')
 client = discord.Client()
 
 intents = discord.Intents().all()
-client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix='Rag ',intents=intents) #needed to imported commands from discord
+#client = discord.Client(intents=intents)
+client = commands.Bot(command_prefix='Rag ',intents=intents) #needed to imported commands from discord
 
 #downloads the audio file from yt
 youtube_dl.utils.bug_reports_message = lambda: ''
@@ -60,7 +60,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['title'] if stream else ytdl.prepare_filename(data)
         return filename
 
-@bot.command(name='join', help='Tells the bot to join the voice channel')
+@client.command(name='join', help='Tells the client to join the voice channel')
 async def join(ctx):
     if not ctx.message.author.voice:
         await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
@@ -69,55 +69,55 @@ async def join(ctx):
         channel = ctx.message.author.voice.channel
     await channel.connect()
 
-@bot.command(name='leave', help='To make the bot leave the voice channel')
+@client.command(name='leave', help='To make the client leave the voice channel')
 async def leave(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_connected():
         await voice_client.disconnect()
     else:
-        await ctx.send("The bot is not connected to a voice channel.")
+        await ctx.send("The client is not connected to a voice channel.")
 
-@bot.command(name='play_song', help='To play song')
+@client.command(name='sing', help='To play song')
 async def play(ctx,url):
     try :
         server = ctx.message.guild
         voice_channel = server.voice_client
 
         async with ctx.typing():
-            filename = await YTDLSource.from_url(url, loop=bot.loop)
+            filename = await YTDLSource.from_url(url, loop=client.loop)
             voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
         await ctx.send('**As you wish** {}'.format(filename))
     except:
-        await ctx.send("The bot is not connected to a voice channel.")
+        await ctx.send("The client is not connected to a voice channel.")
 
-@bot.command(name='pause', help='This command pauses the song')
+@client.command(name='pause', help='This command pauses the song')
 async def pause(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():
         await voice_client.pause()
     else:
-        await ctx.send("The bot is not playing anything at the moment.")
+        await ctx.send("The client is not playing anything at the moment.")
 
-@bot.command(name='resume', help='Resumes the song')
+@client.command(name='resume', help='Resumes the song')
 async def resume(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_paused():
         await voice_client.resume()
     else:
-        await ctx.send("The bot was not playing anything before this. Use play_song command")
+        await ctx.send("The client was not playing anything before this. Use play_song command")
 
-@bot.command(name='stop', help='Stops the song')
+@client.command(name='stop', help='Stops the song')
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():
         await voice_client.stop()
     else:
-        await ctx.send("The bot is not playing anything at the moment.")
+        await ctx.send("The client is not playing anything at the moment.")
 
 
 @client.event
 async def on_ready():   #Event handler that is executed when the client has established connection to Discord
-    for guild in client.guilds: #loops the through the list of servers the bot is connected to and matches it 
+    for guild in client.guilds: #loops the through the list of servers the client is connected to and matches it 
         if guild.name == SERVER:        #--with the one we wanted
             break
     
@@ -143,7 +143,7 @@ with open('wordlist.txt', 'r') as f:
 @client.event
 async def on_message(message):
 
-    if(message.author == client.user):  #if message is coming from the bot itself
+    if(message.author == client.user):  #if message is coming from the client itself
         return
 
     
@@ -187,5 +187,4 @@ async def from_url(cls, url, *, loop=None, stream=False):
         filename = data['title'] if stream else ytdl.prepare_filename(data)
         return filename
 
-#client.run(TOKEN)
-bot.run(TOKEN)
+client.run(TOKEN)
