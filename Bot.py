@@ -1,10 +1,11 @@
 # Client.py
 #This is a client class that represents the connection to discord
 import os
+from tokenize import Token
 
 import discord
-from discord import message, guild
-from discord.ext import commands
+#from discord import message, guild
+from discord.ext import commands #very important that it's .ext and not discord alone
 from dotenv import load_dotenv
 import asyncio  #used for concurency programming. Similar to multi threading
 #for music
@@ -21,7 +22,7 @@ client = discord.Client()
 
 intents = discord.Intents().all()
 client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix='Rag',intents=intents) #needed to imported commands from discord
+bot = commands.Bot(command_prefix='Rag ',intents=intents) #needed to imported commands from discord
 
 #downloads the audio file from yt
 youtube_dl.utils.bug_reports_message = lambda: ''
@@ -59,7 +60,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['title'] if stream else ytdl.prepare_filename(data)
         return filename
 
-@bot.command(name='come', help='Tells the bot to join the voice channel')
+@bot.command(name='join', help='Tells the bot to join the voice channel')
 async def join(ctx):
     if not ctx.message.author.voice:
         await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
@@ -68,7 +69,7 @@ async def join(ctx):
         channel = ctx.message.author.voice.channel
     await channel.connect()
 
-@bot.command(name='gtfo', help='To make the bot leave the voice channel')
+@bot.command(name='leave', help='To make the bot leave the voice channel')
 async def leave(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_connected():
@@ -76,7 +77,7 @@ async def leave(ctx):
     else:
         await ctx.send("The bot is not connected to a voice channel.")
 
-@bot.command(name='sing', help='To play song')
+@bot.command(name='play_song', help='To play song')
 async def play(ctx,url):
     try :
         server = ctx.message.guild
@@ -105,7 +106,7 @@ async def resume(ctx):
     else:
         await ctx.send("The bot was not playing anything before this. Use play_song command")
 
-@bot.command(name='stfu', help='Stops the song')
+@bot.command(name='stop', help='Stops the song')
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():
@@ -186,4 +187,5 @@ async def from_url(cls, url, *, loop=None, stream=False):
         filename = data['title'] if stream else ytdl.prepare_filename(data)
         return filename
 
-client.run(TOKEN)
+#client.run(TOKEN)
+bot.run(TOKEN)
